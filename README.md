@@ -166,7 +166,6 @@ PubkeyAuthentication yes
 Extra:
 
 -The firewall has been configured to monitor for repeat unsuccessful login attempts and appropriately ban attackers; 
--vm includes monitoring applications that provide automated feedback on application availability status and/or system security alerts
 
     "sudo apt-get install fail2ban"
 
@@ -208,6 +207,30 @@ Extra:
         apt-get update
         apt-get upgrade -y
         apt-get autoclean"
+
+-vm includes monitoring applications that provide automated feedback on application availability status and/or system security alerts
+    "sudo apt-get install munin"
+    "sudo nano /etc/munin/munin.conf"
+    
+    htmldir /var/www/munin/
+    uncomment Dbdir, htmldir, logdir, rundir, tmpldir
+    Dbdir stores all of the rrdfiles containing the actual monitoring information, htmldir stores the images and site files, logdir maintains the logs, and rundir holds the state  files.   
+    
+    replace [localhost.localdomain] with [grader.52.24.247.4]
+    
+    edit munin apache config
+    "sudo nano /etc/munin/apache.conf"
+    
+    edit
+    # Enable this for template generation
+    Alias /munin /var/www/munin/
+    
+    <Directory /var/www/munin/>
+        Order allow,deny
+        Allow from all
+
+
+    visit "http://52.24.247.4/munin/" to view monitor
 
 iv. A list of any third-party resources you made use of to complete this project.
 https://www.digitalocean.com/
